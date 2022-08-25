@@ -33,6 +33,8 @@ node{
        teamDomain: 'javahomecloud',
        tokenCredentialId: 'slack-demo'
    }
-   its poll scm demo
 
 }
+
+
+its poll scm demo
