@@ -1,19 +1,22 @@
-@Library("mylibs") _
-pipeline {
-  agent any
-  tools {
-    maven 'maven2'
-  }
-  stages{
-    stage("Maven Build"){
-      steps{
-        sh "mvn clean package"
-      }
+@Library("library") _
+pipeline{
+    agent any
+    stages{
+        stage("git checkout"){
+            steps{
+                git credentialsId: 'github-manu', url: 'https://github.com/manojkrishna0009/my-app.git'
+            }
+        }
+        stage("maven build"){
+            steps{
+                sh 'mvn clean package'
+            }
+        }
+        stage("dev tomcat deploy"){
+            steps{
+                tomcatdeploy("3.141.29.245","ec2-user","tomcat")
+                
+            }
+        }
     }
-    stage("Deploy To Dev"){
-      steps{
-        tomcatDeploy("tomcat-dev","ec2-user",["172.31.13.89","172.31.13.89"])
-      }
-    }
-  }
 }
